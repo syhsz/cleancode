@@ -1,8 +1,8 @@
 package com.epam.engx.cleancode.functions.task2;
 
-import com.epam.engx.cleancode.functions.task2.stubs.AccountStub;
 import com.epam.engx.cleancode.functions.task2.stubs.NotRegisteredAccountStub;
 import com.epam.engx.cleancode.functions.task2.stubs.NotVisitingAccountStub;
+import com.epam.engx.cleancode.functions.task2.stubs.AccountStub;
 import com.epam.engx.cleancode.functions.task2.stubs.ReviewStub;
 import com.epam.engx.cleancode.functions.task2.thirdpartyjar.Level;
 import com.epam.engx.cleancode.functions.task2.thirdpartyjar.NotActivUserException;

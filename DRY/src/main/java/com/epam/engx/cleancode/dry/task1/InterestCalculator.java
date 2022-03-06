@@ -42,29 +42,21 @@ public class InterestCalculator implements Profitable {
 
     private BigDecimal interest(AccountDetails accountDetails) {
         double interest = 0;
-        if (isAccountStartedAfterBonusAge(accountDetails)) {
-            if (AGE <= accountDetails.getAge()) {
-                //interest = (PrincipalAmount * DurationInYears * AnnualInterestRate) / 100
-                interest = accountDetails.getBalance().doubleValue()
-                        * durationSinceStartDateInYears(accountDetails.getStartDate()) * SENIOR_PERCENT / 100;
-            } else {
-                interest = accountDetails.getBalance().doubleValue()
-                        * durationSinceStartDateInYears(accountDetails.getStartDate()) * INTEREST_PERCENT / 100;
-            }
-        }
+
+         if (AGE <= accountDetails.getAge()) {
+             interest = generateInterest(SENIOR_PERCENT, accountDetails);
+
+         } else {
+             interest = generateInterest(INTEREST_PERCENT, accountDetails);
+         }
+
         return BigDecimal.valueOf(interest);
     }
 
-    private int durationSinceStartDateInYears(Date startDate) {
-        Calendar startCalendar = new GregorianCalendar();
-        startCalendar.setTime(startDate);
-        Calendar endCalendar = new GregorianCalendar();
-        endCalendar.setTime(new Date());
-
-        int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
-        if (endCalendar.get(Calendar.DAY_OF_YEAR) + LEAP_YEAR_SHIFT < startCalendar.get(Calendar.DAY_OF_YEAR))
-            return diffYear - 1;
-        return diffYear;
-
+    private double generateInterest(double percent, AccountDetails accountDetails){
+        double interest = accountDetails.getBalance().doubleValue()
+                * durationBetweenDatesInYears(accountDetails.getStartDate(), new Date()) * percent / 100;
+        return interest;
     }
+
 }

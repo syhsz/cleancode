@@ -7,28 +7,28 @@ public class UserReportController {
     private UserReportBuilder userReportBuilder;
 
     public String getUserTotalOrderAmountView(String userId, Model model){
-        String totalMessage = getUserTotalMessage(userId);
-        if (totalMessage == null)
+
+        try {
+            String totalMessage = getUserTotalMessage(userId);
+            model.addAttribute("userTotalMessage", totalMessage);
+            return "userTotal";
+        } catch (NullDAOException e) {
             return "technicalError";
-        model.addAttribute("userTotalMessage", totalMessage);
-        return "userTotal";
+        }
     }
 
     private String getUserTotalMessage(String userId) {
 
-        Double amount = userReportBuilder.getUserTotalOrderAmount(userId);
-
-        if (amount == null)
-            return null;
-
-        if (amount == -1)
+        try{
+            Double amount = userReportBuilder.getUserTotalOrderAmount(userId);
+            return "User Total: " + amount + "$";
+        } catch (NoUserException e) {
             return "WARNING: User ID doesn't exist.";
-        if (amount == -2)
+        } catch (NoSubmittedOrderException e) {
             return "WARNING: User have no submitted orders.";
-        if (amount == -3)
+        } catch (WrongOrderAccountException e) {
             return "ERROR: Wrong order amount.";
-
-        return "User Total: " + amount + "$";
+        }
     }
 
 

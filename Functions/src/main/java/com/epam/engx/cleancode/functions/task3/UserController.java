@@ -18,4 +18,5 @@ public abstract class UserController implements Controller {
     public void setUserAuthenticator(UserAuthenticator userAuthenticator) {
         this.userAuthenticator = userAuthenticator;
     }
+
 }

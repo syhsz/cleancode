@@ -9,11 +9,16 @@ public class DateUtil {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		calendar.add(Calendar.DATE, up ? 1 : -1);
+		setMidnight(calendar);
+		return calendar.getTime();
+	}
+
+	private void setMidnight(Calendar calendar){
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
-		return calendar.getTime();
 	}
+
 
 }
