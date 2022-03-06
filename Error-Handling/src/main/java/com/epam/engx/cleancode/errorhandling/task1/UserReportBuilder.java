@@ -13,16 +13,16 @@ public class UserReportBuilder {
     public Double getUserTotalOrderAmount(String userId) {
 
         if (userDao == null)
-            return null;
+            throw new NullDAOException();
 
         User user = userDao.getUser(userId);
         if (user == null)
-            return -1.0;
+            throw new NoUserException();
 
         List<Order> orders = user.getAllOrders();
 
         if (orders.isEmpty())
-            return -2.0;
+            throw new NoSubmittedOrderException();
 
         Double sum = 0.0;
         for (Order order : orders) {
@@ -30,7 +30,7 @@ public class UserReportBuilder {
             if (order.isSubmitted()) {
                 Double total = order.total();
                 if (total < 0)
-                    return -3.0;
+                    throw new WrongOrderAccountException();
                 sum += total;
             }
         }
@@ -46,4 +46,16 @@ public class UserReportBuilder {
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
+}
+
+class NullDAOException extends RuntimeException{
+}
+
+class NoUserException extends RuntimeException{
+}
+
+class NoSubmittedOrderException extends RuntimeException{
+}
+
+class WrongOrderAccountException extends RuntimeException{
 }

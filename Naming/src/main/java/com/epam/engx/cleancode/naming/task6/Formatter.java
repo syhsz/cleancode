@@ -10,13 +10,13 @@ public class Formatter {
 
     public String formatKeyValue(String key, String value) {
         String content = key + UNDERSCORE + value;
-        String minuses = repeat(MINUS, content.length());
+        String minuses = repeatSymbol(MINUS, content.length());
         return PLUS +  minuses + PLUS + "\n"
                 + PIPE + content + PIPE + "\n"
                 + PLUS + minuses + PLUS + "\n";
     }
 
-    private String repeat(String symbol, int times) {
+    private String repeatSymbol(String symbol, int times) {
         String result = "";
         for (int i = 0; i < times; i++)
             result += symbol;
